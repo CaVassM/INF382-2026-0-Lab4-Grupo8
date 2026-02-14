@@ -43,3 +43,7 @@ Cualquier otro número simulará una cuenta no válida o no encontrada.
 1.  Clonar el repositorio.
 2.  Instalar dependencias (aunque este entorno usa ESM modules directamente).
 3.  Ejecutar `npm start` o abrir el archivo `index.html` en un servidor local.
+
+## Integrantes
+- Carlos Camilo Vásquez Morales (20202583)
+- Sebastián Gómez Armando Garay (20196378)
