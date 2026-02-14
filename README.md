@@ -44,6 +44,12 @@ Cualquier otro número simulará una cuenta no válida o no encontrada.
 2.  Instalar dependencias (aunque este entorno usa ESM modules directamente).
 3.  Ejecutar `npm start` o abrir el archivo `index.html` en un servidor local.
 
+## Link Google AI Studio
+- https://ai.studio/apps/drive/1MuhzVhuUQE8ditUZ71KeawuLos9cXcpl
+  
+## Documentación
+- https://docs.google.com/document/d/1eWgnBv2hy6Iwvh_UMATi_YH9_Ej9F7VLZiAyk8U6AOE/edit?usp=sharing
+
 ## Integrantes
 - Carlos Camilo Vásquez Morales (20202583)
 - Sebastián Gómez Armando Garay (20196378)
