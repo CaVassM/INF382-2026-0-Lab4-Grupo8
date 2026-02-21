@@ -174,8 +174,13 @@ export const TransferFormScreen: React.FC<TransferProps> = ({ changeView, transa
     const handleContinue = () => {
         const numAmount = parseFloat(amount);
         
-        if (isNaN(numAmount) || numAmount < 1.00) {
-            setError('El monto mínimo de transferencia es S/ 1.00');
+        if (isNaN(numAmount) || numAmount < 1.00 || numAmount > 60000.00) {
+            setError('El monto debe estar entre S/ 1.00 y S/ 60,000.00');
+            return;
+        }
+
+        if (numAmount > sourceAccount.balance) {
+            setError('Saldo insuficiente en la cuenta seleccionada.');
             return;
         }
 
@@ -288,6 +293,7 @@ export const TransferFormScreen: React.FC<TransferProps> = ({ changeView, transa
                             className="w-full text-3xl font-bold text-slate-900 outline-none"
                          />
                      </div>
+                     <p className="text-slate-400 text-[10px] mt-1 ml-1 font-medium">Límite: S/ 1.00 - S/ 60,000.00</p>
                 </div>
 
                 {/* Concept */}

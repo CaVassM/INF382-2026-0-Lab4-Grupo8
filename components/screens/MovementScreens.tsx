@@ -74,11 +74,6 @@ export const MovementsListScreen: React.FC<MovementProps> = ({ changeView, setMo
             <Header 
                 title="Movimientos" 
                 onBack={() => changeView(ViewState.DASHBOARD)} 
-                actions={
-                    <button className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-900">
-                        <MoreHorizontal className="w-5 h-5" />
-                    </button>
-                }
             />
             
             <div className="px-6 py-4 flex-1 overflow-y-auto no-scrollbar">

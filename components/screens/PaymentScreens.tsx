@@ -12,6 +12,27 @@ interface PaymentProps {
 
 // 1. Payment Menu
 export const PaymentMenuScreen: React.FC<PaymentProps> = ({ changeView }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const frequentServices = [
+    { id: 'entel', name: 'Entel', subtitle: 'Telefonía móvil y fija', icon: <Smartphone className="w-6 h-6" />, color: 'bg-blue-100 text-blue-600', view: ViewState.PAYMENT_SERVICE_SELECT },
+    { id: 'luz', name: 'Luz del Sur', subtitle: 'Energía eléctrica', icon: <Zap className="w-6 h-6 fill-current" />, color: 'bg-yellow-100 text-yellow-600' },
+    { id: 'sedapal', name: 'Sedapal', subtitle: 'Agua potable', icon: <Droplet className="w-6 h-6 fill-current" />, color: 'bg-blue-100 text-blue-500' },
+  ];
+
+  const otherCompanies = [
+    { id: 'claro', name: 'Claro Perú' },
+    { id: 'movistar', name: 'Movistar' },
+  ];
+
+  const filteredFrequent = frequentServices.filter(s => 
+    s.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const filteredOther = otherCompanies.filter(c => 
+    c.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="flex flex-col h-full bg-slate-50">
       <Header title="Pagar servicios" onBack={() => changeView(ViewState.DASHBOARD)} />
@@ -22,72 +43,62 @@ export const PaymentMenuScreen: React.FC<PaymentProps> = ({ changeView }) => {
             <Search className="w-5 h-5 text-slate-400" />
             <input 
                 placeholder="Buscar empresa" 
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full outline-none text-slate-900 placeholder:text-slate-400 font-medium"
             />
         </div>
 
         {/* Frequent Services */}
-        <h3 className="font-bold text-lg text-slate-900 mb-4">Servicios frecuentes</h3>
-        <div className="flex flex-col gap-4 mb-8">
-            <div 
-                onClick={() => changeView(ViewState.PAYMENT_SERVICE_SELECT)}
-                className="bg-white p-4 rounded-2xl shadow-sm flex items-center gap-4 cursor-pointer active:bg-slate-50 transition-colors"
-            >
-                <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center shrink-0">
-                    <Smartphone className="w-6 h-6" />
-                </div>
-                <div className="flex-1">
-                    <h4 className="font-bold text-slate-900">Entel</h4>
-                    <p className="text-slate-400 text-xs">Telefonía móvil y fija</p>
-                </div>
-                <ChevronRight className="w-5 h-5 text-slate-400" />
+        {filteredFrequent.length > 0 && (
+          <>
+            <h3 className="font-bold text-lg text-slate-900 mb-4">Servicios frecuentes</h3>
+            <div className="flex flex-col gap-4 mb-8">
+                {filteredFrequent.map(service => (
+                  <div 
+                      key={service.id}
+                      onClick={() => service.view && changeView(service.view)}
+                      className="bg-white p-4 rounded-2xl shadow-sm flex items-center gap-4 cursor-pointer active:bg-slate-50 transition-colors"
+                  >
+                      <div className={`w-12 h-12 ${service.color} rounded-full flex items-center justify-center shrink-0`}>
+                          {service.icon}
+                      </div>
+                      <div className="flex-1">
+                          <h4 className="font-bold text-slate-900">{service.name}</h4>
+                          <p className="text-slate-400 text-xs">{service.subtitle}</p>
+                      </div>
+                      <ChevronRight className="w-5 h-5 text-slate-400" />
+                  </div>
+                ))}
             </div>
-
-            <div className="bg-white p-4 rounded-2xl shadow-sm flex items-center gap-4 cursor-pointer">
-                <div className="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center shrink-0">
-                    <Zap className="w-6 h-6 fill-current" />
-                </div>
-                <div className="flex-1">
-                    <h4 className="font-bold text-slate-900">Luz del Sur</h4>
-                    <p className="text-slate-400 text-xs">Energía eléctrica</p>
-                </div>
-                <ChevronRight className="w-5 h-5 text-slate-400" />
-            </div>
-
-            <div className="bg-white p-4 rounded-2xl shadow-sm flex items-center gap-4 cursor-pointer">
-                <div className="w-12 h-12 bg-blue-100 text-blue-500 rounded-full flex items-center justify-center shrink-0">
-                    <Droplet className="w-6 h-6 fill-current" />
-                </div>
-                <div className="flex-1">
-                    <h4 className="font-bold text-slate-900">Sedapal</h4>
-                    <p className="text-slate-400 text-xs">Agua potable</p>
-                </div>
-                <ChevronRight className="w-5 h-5 text-slate-400" />
-            </div>
-        </div>
+          </>
+        )}
 
         {/* Other Companies */}
-        <h3 className="font-bold text-lg text-slate-900 mb-4">Otras empresas</h3>
-        <div className="flex flex-col gap-4">
-             <div className="bg-white p-4 rounded-2xl shadow-sm flex items-center gap-4 cursor-pointer">
-                <div className="w-12 h-12 bg-slate-100 text-slate-500 rounded-full flex items-center justify-center shrink-0">
-                    <LayoutGrid className="w-6 h-6" />
-                </div>
-                <div className="flex-1">
-                    <h4 className="font-bold text-slate-900">Claro Perú</h4>
-                </div>
-                <ChevronRight className="w-5 h-5 text-slate-400" />
+        {filteredOther.length > 0 && (
+          <>
+            <h3 className="font-bold text-lg text-slate-900 mb-4">Otras empresas</h3>
+            <div className="flex flex-col gap-4">
+                {filteredOther.map(company => (
+                  <div key={company.id} className="bg-white p-4 rounded-2xl shadow-sm flex items-center gap-4 cursor-pointer">
+                    <div className="w-12 h-12 bg-slate-100 text-slate-500 rounded-full flex items-center justify-center shrink-0">
+                        <LayoutGrid className="w-6 h-6" />
+                    </div>
+                    <div className="flex-1">
+                        <h4 className="font-bold text-slate-900">{company.name}</h4>
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-slate-400" />
+                  </div>
+                ))}
             </div>
-             <div className="bg-white p-4 rounded-2xl shadow-sm flex items-center gap-4 cursor-pointer">
-                <div className="w-12 h-12 bg-slate-100 text-slate-500 rounded-full flex items-center justify-center shrink-0">
-                    <LayoutGrid className="w-6 h-6" />
-                </div>
-                <div className="flex-1">
-                    <h4 className="font-bold text-slate-900">Movistar</h4>
-                </div>
-                <ChevronRight className="w-5 h-5 text-slate-400" />
-            </div>
-        </div>
+          </>
+        )}
+
+        {filteredFrequent.length === 0 && filteredOther.length === 0 && (
+          <div className="text-center py-10">
+            <p className="text-slate-400">No se encontraron empresas.</p>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -154,14 +165,17 @@ export const PaymentServiceSelectScreen: React.FC<PaymentProps> = ({ changeView 
 
 // 3. Bill Selection
 export const PaymentBillSelectScreen: React.FC<PaymentProps> = ({ changeView, setPayment, user }) => {
+    const [phoneNumber, setPhoneNumber] = useState('987654321');
     const [selectedBills, setSelectedBills] = useState<string[]>(['bill1']); // Pre-select bill1
     const [sourceAccount, setSourceAccount] = useState<Account>(user.accounts[0]);
     const [showAccountSelector, setShowAccountSelector] = useState(false);
 
-    const bills = [
+    const hasDebts = phoneNumber.replace(/\s/g, '') === '987654321';
+
+    const bills = hasDebts ? [
         { id: 'bill1', title: 'Factura Febrero 2026', date: 'Vence: 15 Feb 2026', number: '2026-02-001234', amount: 59.90, status: 'Pendiente' },
         { id: 'bill2', title: 'Factura Enero 2026', date: 'Vence: 15 Ene 2026', number: '2026-01-001233', amount: 62.50, status: 'Atrasada' },
-    ];
+    ] : [];
 
     const toggleBill = (id: string) => {
         setSelectedBills(prev => 
@@ -175,7 +189,7 @@ export const PaymentBillSelectScreen: React.FC<PaymentProps> = ({ changeView, se
 
     const handleContinue = () => {
         setPayment({
-            serviceName: 'Entel - 987 654 321',
+            serviceName: `Entel - ${phoneNumber}`,
             amount: totalAmount.toFixed(2),
             operationId: 'OP-20260205-8849'
         });
@@ -189,52 +203,89 @@ export const PaymentBillSelectScreen: React.FC<PaymentProps> = ({ changeView, se
              <div className="px-6 py-4 flex-1 overflow-y-auto no-scrollbar pb-40">
                 <div className="mb-6">
                     <label className="text-slate-500 font-bold text-sm mb-2 block">Número de teléfono</label>
-                    <div className="bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between">
-                        <span className="font-bold text-slate-900 text-lg">987 654 321</span>
-                        <div className="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-500">
-                             <Check className="w-4 h-4" />
-                        </div>
+                    <div className="bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between border border-transparent focus-within:border-indigo-500 transition-all">
+                        <input 
+                            type="text"
+                            maxLength={9}
+                            value={phoneNumber}
+                            onChange={(e) => {
+                                const val = e.target.value.replace(/\D/g, '');
+                                setPhoneNumber(val);
+                                if (val !== '987654321') {
+                                    setSelectedBills([]);
+                                } else {
+                                    setSelectedBills(['bill1']);
+                                }
+                            }}
+                            className="font-bold text-slate-900 text-lg outline-none w-full"
+                            placeholder="Ej: 987654321"
+                        />
+                        {phoneNumber.length === 9 && (
+                            <div className={`w-6 h-6 rounded-full flex items-center justify-center ${hasDebts ? 'bg-emerald-100 text-emerald-500' : 'bg-slate-100 text-slate-400'}`}>
+                                <Check className="w-4 h-4" />
+                            </div>
+                        )}
                     </div>
+                    {phoneNumber.length > 0 && phoneNumber.length < 9 && (
+                        <p className="text-red-500 text-[10px] mt-1 font-bold ml-2 animate-in fade-in slide-in-from-top-1">Debe ingresar exactamente 9 dígitos</p>
+                    )}
                 </div>
 
                 <h3 className="font-bold text-lg text-slate-900 mb-4">Deudas encontradas</h3>
 
-                <div className="space-y-4 mb-4">
-                    {bills.map((bill) => {
-                        const isSelected = selectedBills.includes(bill.id);
-                        return (
-                            <div 
-                                key={bill.id}
-                                onClick={() => toggleBill(bill.id)}
-                                className={`p-4 rounded-2xl border-2 cursor-pointer transition-all bg-white relative overflow-hidden ${isSelected ? 'border-indigo-600' : 'border-transparent shadow-sm'}`}
-                            >
-                                <div className="flex items-start gap-4">
-                                    <div className={`w-6 h-6 rounded-md border-2 flex items-center justify-center shrink-0 transition-colors ${isSelected ? 'bg-indigo-600 border-indigo-600' : 'border-slate-300'}`}>
-                                        {isSelected && <Check className="w-4 h-4 text-white" />}
-                                    </div>
-                                    <div className="flex-1">
-                                        <div className="flex justify-between items-start mb-1">
-                                            <h4 className="font-bold text-slate-900">{bill.title}</h4>
-                                            <span className="font-bold text-slate-900 text-lg">S/ {bill.amount.toFixed(2)}</span>
+                {bills.length > 0 ? (
+                    <div className="space-y-4 mb-4">
+                        {bills.map((bill) => {
+                            const isSelected = selectedBills.includes(bill.id);
+                            return (
+                                <div 
+                                    key={bill.id}
+                                    onClick={() => toggleBill(bill.id)}
+                                    className={`p-4 rounded-2xl border-2 cursor-pointer transition-all bg-white relative overflow-hidden ${isSelected ? 'border-indigo-600' : 'border-transparent shadow-sm'}`}
+                                >
+                                    <div className="flex items-start gap-4">
+                                        <div className={`w-6 h-6 rounded-md border-2 flex items-center justify-center shrink-0 transition-colors ${isSelected ? 'bg-indigo-600 border-indigo-600' : 'border-slate-300'}`}>
+                                            {isSelected && <Check className="w-4 h-4 text-white" />}
                                         </div>
-                                        <p className="text-slate-400 text-xs mb-1">{bill.date}</p>
-                                        <p className="text-slate-300 text-xs">N° {bill.number}</p>
-                                        
-                                        <div className="absolute top-10 right-4">
-                                            <span className={`text-[10px] font-bold px-2 py-1 rounded-lg ${
-                                                bill.status === 'Atrasada' ? 'bg-red-100 text-red-500' : 'bg-amber-100 text-amber-500'
-                                            }`}>
-                                                {bill.status}
-                                            </span>
+                                        <div className="flex-1">
+                                            <div className="flex justify-between items-start mb-1">
+                                                <h4 className="font-bold text-slate-900">{bill.title}</h4>
+                                                <span className="font-bold text-slate-900 text-lg">S/ {bill.amount.toFixed(2)}</span>
+                                            </div>
+                                            <p className="text-slate-400 text-xs mb-1">{bill.date}</p>
+                                            <p className="text-slate-300 text-xs">N° {bill.number}</p>
+                                            
+                                            <div className="absolute top-10 right-4">
+                                                <span className={`text-[10px] font-bold px-2 py-1 rounded-lg ${
+                                                    bill.status === 'Atrasada' ? 'bg-red-100 text-red-500' : 'bg-amber-100 text-amber-500'
+                                                }`}>
+                                                    {bill.status}
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        );
-                    })}
-                </div>
+                            );
+                        })}
+                    </div>
+                ) : (
+                    <div className="bg-white p-8 rounded-2xl shadow-sm text-center mb-8 border border-slate-100">
+                        <div className="w-16 h-16 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <Check className="w-8 h-8" strokeWidth={3} />
+                        </div>
+                        <p className="font-bold text-slate-900 mb-1">¡Estás al día!</p>
+                        <p className="text-slate-400 text-sm">No se encontraron deudas pendientes para este número.</p>
+                    </div>
+                )}
 
-                <button className="text-indigo-600 font-bold text-sm mb-8">Pagar todas (S/ 122.40)</button>
+                {bills.length > 0 && (
+                    <button 
+                        onClick={() => setSelectedBills(bills.map(b => b.id))}
+                        className="text-indigo-600 font-bold text-sm mb-8"
+                    >
+                        Pagar todas (S/ 122.40)
+                    </button>
+                )}
 
                 <div className="mb-20">
                     <p className="font-bold text-slate-500 text-sm mb-2">Cuenta de pago</p>
@@ -263,7 +314,7 @@ export const PaymentBillSelectScreen: React.FC<PaymentProps> = ({ changeView, se
                          <p className="text-emerald-500 font-bold text-xs">S/ 0.00</p>
                      </div>
                  </div>
-                 <Button onClick={handleContinue} disabled={totalAmount === 0}>Continuar</Button>
+                 <Button onClick={handleContinue} disabled={totalAmount === 0 || phoneNumber.length !== 9}>Continuar</Button>
              </div>
 
              {/* Account Selector Modal */}
