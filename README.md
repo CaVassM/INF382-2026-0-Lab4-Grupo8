@@ -7,6 +7,7 @@ Este proyecto es una aplicación web progresiva (PWA) construida con React que s
 - **Google AI Studio:** [Ver Aplicación](https://ai.studio/apps/drive/1MuhzVhuUQE8ditUZ71KeawuLos9cXcpl)
 - **Documentación:** [Ver Documento](https://docs.google.com/document/d/1eWgnBv2hy6Iwvh_UMATi_YH9_Ej9F7VLZiAyk8U6AOE/edit?usp=sharing)
 - <b>Figma</b>: [Ver Documento](https://www.figma.com/design/88hl2eCGnMsY5PkGxkUutU/Banco-Conf%C3%ADa?node-id=0-1&p=f&t=vtqHhMGQLyr18ue8-0)
+- <b>Despliegue Prototipo</b>: (https://sebasgomezg.github.io/INF382-2026-0-Lab4-Grupo8/)
 
 ## Integrantes
 
