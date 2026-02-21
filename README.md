@@ -8,6 +8,7 @@ Este proyecto es una aplicación web progresiva (PWA) construida con React que s
 - **Documentación:** [Ver Documento](https://docs.google.com/document/d/1eWgnBv2hy6Iwvh_UMATi_YH9_Ej9F7VLZiAyk8U6AOE/edit?usp=sharing)
 - <b>Figma</b>: [Ver Documento](https://www.figma.com/design/88hl2eCGnMsY5PkGxkUutU/Banco-Conf%C3%ADa?node-id=0-1&p=f&t=vtqHhMGQLyr18ue8-0)
 - <b>Despliegue Prototipo</b>: (https://sebasgomezg.github.io/INF382-2026-0-Lab4-Grupo8/)
+- <b>Miro UFDs</b>: (https://miro.com/welcomeonboard/NFg1cmFsUVhJQlNTZ1FDME4reHUvOEp3LzFsU25QRzNkdmNaaUMrSzlNbnliS1JOK2p4QmMwMlhEV0NPMUdZeUNwdy9CeFNmNVMwd2c4czArOGdxUWdHUXV3RDExMnp3SDlpRVE0SkVwU0tYdUJvdkxhbWJtT0c4UG92bU1TSlRyVmtkMG5hNDA3dVlncnBvRVB2ZXBnPT0hdjE=?share_link_id=239940760192)
 
 ## Integrantes
 
